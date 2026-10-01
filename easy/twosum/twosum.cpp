@@ -1,20 +1,24 @@
 #include <vector>
 using namespace std;
+#include <unordered_map>
 
 class Solution 
 {
 public:
     vector<int> twoSum(vector<int>& nums, int target) 
     {
-        //brute force by iteration
+        unordered_map<int, int> seen;
+
         for(int i = 0; i < nums.size(); i++)
         {
-            for(int j = i+1; j < nums.size(); j++)
-            {
-                if(nums[i]+nums[j] == target)
-                    return {i,j};
-            }
+            int complement = target - nums[i];
+
+            if(seen.count(complement)) //checks presence of complement in the map
+                return {seen[complement], i};
+
+            seen[nums[i]] = i;
         }
+
         return {};
     }
 };
