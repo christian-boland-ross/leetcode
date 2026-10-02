@@ -5,30 +5,24 @@ class Solution
 public:
     int lengthOfLongestSubstring(string s)
     {
-        int length = 0;
-        int biggestLength = 0;
-        unordered_map<char, int> seen;
+        unordered_map<char, int> recentIndex;
 
-        int i = 0;
-        while(i < s.length() - biggestLength)
+        int rear = 0;
+        int biggestLength = 0;
+
+        //loop till front pointer hits end
+        for (int front = 0; front < s.length(); front++)
         {
-            //for each letter after i
-            int j = i;
-            //if not seen, increment length and add to seen hash table?
-            while(j < s.length() && !seen.count(s[j]))
+            if (recentIndex.count(s[front]))
             {
-                seen.insert({s[j], j});
-                length++;
-                j++;
+                rear = max(rear, recentIndex[s[front]] + 1); //when repetition found, move rear pointer forward
             }
-            //if seen
-            biggestLength = length > biggestLength ? length : biggestLength;
-            //empty hastable
-            seen.clear();
-            length = 0;
-            i++;
+
+            recentIndex[s[front]] = front;
+
+            biggestLength = max(biggestLength, front - rear + 1);
         }
-        
+
         return biggestLength;
     }
 };
