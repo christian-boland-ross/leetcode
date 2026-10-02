@@ -27,7 +27,7 @@ public:
             current1->val %= 10;
 
             if (current1->next == nullptr &&
-                (!(current2 == nullptr || current2->next == nullptr) || carry))
+                (!(current2 == nullptr || current2->next == nullptr) || carry)) //extends l1 if l2 has more nodes or if there is a carry
             {    
                 current1->next = new ListNode(0);
             }
