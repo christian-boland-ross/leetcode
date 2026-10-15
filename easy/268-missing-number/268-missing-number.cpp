@@ -1,0 +1,13 @@
+class Solution
+{
+public:
+    int missingNumber(vector<int>& nums)
+    {
+        int total = (nums.size()*(nums.size()+1))/2; // guass's summation formula
+        for(int i = 0; i < nums.size(); i++)
+        {
+            total -= nums[i];
+        }
+        return total;
+    }
+};
