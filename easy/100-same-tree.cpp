@@ -14,18 +14,12 @@ class Solution
 public:
     bool isSameTree(TreeNode* p, TreeNode* q)
     {
-        //base case both are null
-        if(p == nullptr && q == nullptr)
-            return true;
-        //if only one is null, not valid //both is already checked above, one or zero so dont need xor, could use and instead
-        //if both are different value, not valid
-        if(p != nullptr ^ q != nullptr ||  p->val != q->val)
-        {
+        if (p == nullptr || q == nullptr)
+            return p == q;
+
+        if (p->val != q->val)
             return false;
-        }
-        else
-        {
-            return isSameTree(p->left, q->left) && isSameTree(p->right, q->right);
-        }
+
+        return isSameTree(p->left, q->left) && isSameTree(p->right, q->right);
     }
 };
