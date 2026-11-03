@@ -11,16 +11,18 @@ class Solution
 public:
     bool hasCycle(ListNode *head)
     {
-        unordered_set<ListNode*> seen;
-        while(head)
-        {
-            if(seen.contains(head))
-                return true;
+        ListNode *slow = head;
+        ListNode *fast = head;
 
-            seen.insert(head);
-            head = head->next;
+        while (fast && fast->next)
+        {
+            slow = slow->next;
+            fast = fast->next->next;
+
+            if (slow == fast)
+                return true;
         }
-        
+
         return false;
     }
 };
