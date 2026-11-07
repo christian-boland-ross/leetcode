@@ -3,27 +3,30 @@ class Solution
 public:
     vector<vector<int>> combinationSum(vector<int>& candidates, int target)
     {
-        vector<int> emptyList;
-        return backtrack(candidates, target, emptyList, 0);
+        vector<vector<int>> result;
+        vector<int> current;
+        backtrack(candidates, target, current, 0, result);
+        return result;
     }
 
-    vector<vector<int>> backtrack(vector<int>& candidates, int target, vector<int> previous, int start)
+    void backtrack(vector<int>& candidates, int target, vector<int>& current, int start, vector<vector<int>>& result)
     {
         if(target == 0)
-            return {previous};
-        vector<vector<int>> combinationList;
+        {
+            result.push_back(current);
+            return;
+        }
+
         for(int i = start; i < candidates.size(); i++)
         {
-            if(target-candidates[i] >= 0)
-            {
-                vector<int> next = previous;
-                next.push_back(candidates[i]);
+            if(candidates[i] > target)
+                continue;
 
-                vector<vector<int>> results = backtrack(candidates, target - candidates[i], next, i);
+            current.push_back(candidates[i]);
 
-                combinationList.insert(combinationList.end(), results.begin(), results.end());
-            }
+            backtrack(candidates, target - candidates[i], current, i, result);
+
+            current.pop_back();
         }
-        return combinationList;
     }
 };
