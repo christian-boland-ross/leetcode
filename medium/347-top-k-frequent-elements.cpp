@@ -10,21 +10,19 @@ public:
             frequencyList[i]++;
         }
 
-        vector<int> topKList;
-        while(topKList.size() < k)
+        priority_queue<pair<int, int>> maxHeap;
+
+        for(auto it : frequencyList)
         {
-            int maxFrequency = 0;
-            int maxElement;
-            for(auto it : frequencyList)
-            {
-                if(it.second > maxFrequency)
-                {
-                    maxFrequency = it.second;
-                    maxElement = it.first;
-                }
-            }
-            topKList.push_back(maxElement);
-            frequencyList.erase(maxElement);
+            maxHeap.push({it.second, it.first});
+        }
+
+        vector<int> topKList;
+
+        while(k--)
+        {
+            topKList.push_back(maxHeap.top().second);
+            maxHeap.pop();
         }
 
         return topKList;
