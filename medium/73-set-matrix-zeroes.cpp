@@ -3,46 +3,43 @@ class Solution
 public:
     void setZeroes(vector<vector<int>>& matrix)
     {
-        //log zeroed indices
-        unordered_set<int> mZero;
-        unordered_set<int> nZero;
+        vector<bool> zeroRows(matrix.size(), false);
+        vector<bool> zeroCols(matrix[0].size(), false);
 
-        for(int m = 0; m < matrix.size(); m++)
+        for(int row = 0; row < m; row++)
         {
-            for(int n = 0; n < matrix[0].size(); n++)
+            for(int col = 0; col < n; col++)
             {
-                if(matrix[m][n] == 0)
+                if(matrix[row][col] == 0)
                 {
-                    mZero.insert(m);
-                    nZero.insert(n);
+                    zeroRows[row] = true;
+                    zeroCols[col] = true;
                 }
             }
         }
-        
-        for(int m : mZero)
+
+        for(int row = 0; row < m; row++)
         {
-            zeroColumn(matrix, m);
+            if(zeroRows[row])
+                zeroRow(matrix, row);
         }
 
-        for(int n : nZero)
+        for(int col = 0; col < n; col++)
         {
-            zeroRow(matrix, n);
-        }
-    }
-
-    void zeroColumn(vector<vector<int>>& matrix, int m)
-    {
-        for(int i = 0; i < matrix[0].size(); i++)
-        {
-            matrix[m][i] = 0;
+            if(zeroCols[col])
+                zeroColumn(matrix, col);
         }
     }
 
-    void zeroRow(vector<vector<int>>& matrix, int n)
+    void zeroColumn(vector<vector<int>>& matrix, int col)
     {
         for(int i = 0; i < matrix.size(); i++)
-        {
-            matrix[i][n] = 0;
-        }
+            matrix[i][col] = 0;
+    }
+
+    void zeroRow(vector<vector<int>>& matrix, int row)
+    {
+        for(int i = 0; i < matrix[0].size(); i++)
+            matrix[row][i] = 0;
     }
 };
