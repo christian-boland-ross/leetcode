@@ -3,43 +3,45 @@ class Solution
 public:
     void setZeroes(vector<vector<int>>& matrix)
     {
-        vector<bool> zeroRows(matrix.size(), false);
-        vector<bool> zeroCols(matrix[0].size(), false);
+        int m = matrix.size();
+        int n = matrix[0].size();
+
+        bool zeroFirstCol = false;
 
         for(int row = 0; row < m; row++)
         {
-            for(int col = 0; col < n; col++)
+            if(matrix[row][0] == 0)
+                zeroFirstCol = true;
+
+            for(int col = 1; col < n; col++)
             {
                 if(matrix[row][col] == 0)
                 {
-                    zeroRows[row] = true;
-                    zeroCols[col] = true;
+                    matrix[row][0] = 0;
+                    matrix[0][col] = 0;
                 }
             }
         }
 
-        for(int row = 0; row < m; row++)
+        for(int row = 1; row < m; row++)
         {
-            if(zeroRows[row])
-                zeroRow(matrix, row);
+            for(int col = 1; col < n; col++)
+            {
+                if(matrix[row][0] == 0 || matrix[0][col] == 0)
+                    matrix[row][col] = 0;
+            }
         }
 
-        for(int col = 0; col < n; col++)
+        if(matrix[0][0] == 0)
         {
-            if(zeroCols[col])
-                zeroColumn(matrix, col);
+            for(int col = 0; col < n; col++)
+                matrix[0][col] = 0;
         }
-    }
 
-    void zeroColumn(vector<vector<int>>& matrix, int col)
-    {
-        for(int i = 0; i < matrix.size(); i++)
-            matrix[i][col] = 0;
-    }
-
-    void zeroRow(vector<vector<int>>& matrix, int row)
-    {
-        for(int i = 0; i < matrix[0].size(); i++)
-            matrix[row][i] = 0;
+        if(zeroFirstCol)
+        {
+            for(int row = 0; row < m; row++)
+                matrix[row][0] = 0;
+        }
     }
 };
