@@ -11,10 +11,20 @@ public:
             int currentVolume = min(height[left], height[right]) * (right - left);
             greatestVolume = max(greatestVolume, currentVolume);
 
-            if(height[left] < height[right])
-                left ++;
+            if (height[left] < height[right])
+            {
+                int currentHeight = height[left];
+
+                while (left < right && height[left] <= currentHeight)
+                    left++;
+            }
             else
-                right --;
+            {
+                int currentHeight = height[right];
+
+                while (left < right && height[right] <= currentHeight)
+                    right--;
+            }
         }
 
         return greatestVolume;
